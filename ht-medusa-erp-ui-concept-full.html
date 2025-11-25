@@ -1,0 +1,1650 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HT ERP / WMS – Concept UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-elevated: #0b1020;
+      --bg-elevated-soft: #11172a;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59,130,246,0.12);
+      --accent-strong: rgba(59,130,246,0.2);
+      --border-subtle: rgba(148,163,184,0.35);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --danger: #f97373;
+      --warning: #fbbf24;
+      --success: #4ade80;
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15,23,42,0.7);
+      --shadow-subtle: 0 10px 25px rgba(15,23,42,0.6);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .app-shell {
+      display: flex;
+      flex: 1;
+      max-width: 1400px;
+      margin: 16px auto;
+      padding: 8px;
+      gap: 12px;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(160deg, #020617, #020617 40%, #020817);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148,163,184,0.25);
+      box-shadow: var(--shadow-soft);
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(59,130,246,0.3), transparent 55%);
+    }
+
+    .logo-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #60a5fa, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+      box-shadow: 0 0 30px rgba(37,99,235,0.6);
+    }
+
+    .sidebar-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar-title-main {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-title-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .sidebar-section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin: 4px 2px;
+    }
+
+    .nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 8px 10px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.18s ease background, 0.18s ease color, 0.18s ease transform,
+        0.18s ease box-shadow;
+    }
+
+    .nav-btn:hover {
+      background: rgba(15,23,42,0.85);
+      color: var(--text-main);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(59,130,246,0.5);
+      box-shadow: 0 0 0 1px rgba(15,23,42,0.8), 0 18px 45px rgba(30,64,175,0.6);
+    }
+
+    .nav-btn-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .nav-tag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: var(--radius-pill);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.35);
+    }
+
+    .nav-tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.25);
+      margin-right: 3px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148,163,184,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .sidebar-pill {
+      padding: 6px 8px;
+      border-radius: var(--radius-lg);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .sidebar-pill span {
+      font-size: 11px;
+    }
+
+    .pill-badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(59,130,246,0.6);
+      background: rgba(15,23,42,0.9);
+      color: var(--accent);
+      font-size: 10px;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-radius: var(--radius-xl);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148,163,184,0.25);
+      background: radial-gradient(circle at top left, #111827 0, #020617 55%);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .topbar-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .topbar-title-main {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .topbar-title-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
+    }
+
+    .search-box {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.35);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--text-main);
+      outline: none;
+      font-size: 13px;
+    }
+
+    .kbd {
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.95);
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-content {
+      flex: 1;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148,163,184,0.2);
+      box-shadow: var(--shadow-soft);
+      background: radial-gradient(circle at top left, rgba(37,99,235,0.2), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(14,165,233,0.18), transparent 55%),
+        #020617;
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .section-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .btn {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.16s ease all;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      border-color: rgba(59,130,246,0.9);
+      box-shadow: 0 14px 40px rgba(37,99,235,0.7);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1.1fr;
+      gap: 10px;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .card {
+      background: rgba(15,23,42,0.92);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148,163,184,0.3);
+      box-shadow: var(--shadow-subtle);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .pill {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.95);
+    }
+
+    .kbd-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.95);
+    }
+
+    .card-body {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .metric-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .metric {
+      flex: 1;
+      min-width: 130px;
+      padding: 6px 8px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(148,163,184,0.4);
+      background: radial-gradient(circle at top, rgba(15,23,42,0.9), #020617);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .metric-value {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.9);
+    }
+
+    .tag.status-success { border-color: rgba(74,222,128,0.7); color: var(--success); }
+    .tag.status-warning { border-color: rgba(251,191,36,0.8); color: var(--warning); }
+    .tag.status-danger  { border-color: rgba(248,113,113,0.8); color: var(--danger); }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .table th,
+    .table td {
+      padding: 6px 6px;
+      text-align: left;
+      border-bottom: 1px solid rgba(30,41,59,0.85);
+    }
+
+    .table th {
+      font-weight: 500;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    .badge-dot.green { background: var(--success); }
+    .badge-dot.yellow { background: var(--warning); }
+    .badge-dot.red { background: var(--danger); }
+    .badge-dot.blue { background: var(--accent); }
+
+    .kanban-columns {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .kanban-column {
+      background: radial-gradient(circle at top, rgba(15,23,42,0.9), #020617);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(30,64,175,0.35);
+      padding: 6px 6px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .kanban-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+
+    .kanban-title {
+      font-weight: 500;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .kanban-counter {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.4);
+    }
+
+    .kanban-card {
+      background: rgba(15,23,42,0.96);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 6px 7px;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .kanban-card-title {
+      font-weight: 500;
+      font-size: 11px;
+    }
+
+    .kanban-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+    }
+
+    .pill-mini {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.45);
+      background: rgba(15,23,42,0.9);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 1024px) {
+      .app-shell {
+        flex-direction: column;
+        max-width: 100%;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      .sidebar-footer {
+        display: none;
+      }
+      .main {
+        width: 100%;
+      }
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .kanban-columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .topbar {
+        flex-wrap: wrap;
+      }
+      .topbar-left {
+        flex: 1 0 100%;
+      }
+      .search-box {
+        flex: 1 0 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-circle">HT</div>
+        <div class="sidebar-title">
+          <div class="sidebar-title-main">HT Ops Console</div>
+          <div class="sidebar-title-sub">Medusa Commerce · ERP Layer</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-section-label">Workspace</div>
+        <div class="nav-group">
+          <button class="nav-btn active" data-view="dashboard" onclick="setView('dashboard', this)">
+            <div class="nav-btn-main">
+              <div class="nav-icon">⌂</div>
+              <span>Operations overview</span>
+            </div>
+            <span class="nav-tag">
+              <span class="nav-tag-dot"></span>
+              Today
+            </span>
+          </button>
+          <button class="nav-btn" data-view="purchasing" onclick="setView('purchasing', this)">
+            <div class="nav-btn-main">
+              <div class="nav-icon">PO</div>
+              <span>Purchasing & inbound</span>
+            </div>
+          </button>
+          <button class="nav-btn" data-view="sales" onclick="setView('sales', this)">
+            <div class="nav-btn-main">
+              <div class="nav-icon">SO</div>
+              <span>Sales & outbound</span>
+            </div>
+          </button>
+          <button class="nav-btn" data-view="inventory" onclick="setView('inventory', this)">
+            <div class="nav-btn-main">
+              <div class="nav-icon">WH</div>
+              <span>Inventory & pallets</span>
+            </div>
+          </button>
+          <button class="nav-btn" data-view="masterdata" onclick="setView('masterdata', this)">
+            <div class="nav-btn-main">
+              <div class="nav-icon">Σ</div>
+              <span>Master data</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-section-label">Alerts</div>
+        <div class="nav-group">
+          <button class="nav-btn" data-view="alerts" onclick="setView('alerts', this)">
+            <div class="nav-btn-main">
+              <div class="nav-icon">!</div>
+              <span>Critical lead times</span>
+            </div>
+            <span class="nav-tag">4 open</span>
+          </button>
+          <button class="nav-btn" data-view="reports" onclick="setView('reports', this)">
+            <div class="nav-btn-main">
+              <div class="nav-icon">⧉</div>
+              <span>Reports & exports</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-pill">
+          <span>Current environment</span>
+          <span class="pill-badge">MVP · Sandbox</span>
+        </div>
+        <div class="sidebar-pill">
+          <span>Today’s workload</span>
+          <span style="font-size:11px;color:var(--accent);">23 open tasks</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="topbar-title">
+            <div class="topbar-title-main">HT-Kunststoffe – Operations cockpit</div>
+            <div class="topbar-title-sub">
+              End-to-end flow: Purchase → Warehouse → Sales → Billing
+            </div>
+          </div>
+          <div class="chip">
+            <span class="chip-dot"></span>
+            Live prototype
+          </div>
+        </div>
+        <div class="search-box">
+          <span style="font-size:12px;opacity:0.8;">⌕</span>
+          <input class="search-input" placeholder="Search orders, pallets, customers, articles…" />
+          <span class="kbd">Ctrl ⌘ K</span>
+        </div>
+        <div class="avatar">
+          PM
+        </div>
+      </header>
+
+      <section class="main-content">
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard">
+          <div class="section-header">
+            <div class="section-title-block">
+              <div class="section-title">
+                Operations overview
+                <span class="pill">Today · 17 Nov</span>
+              </div>
+              <div class="section-subtitle">
+                Snapshot of purchasing, sales, inventory and critical lead times.
+              </div>
+            </div>
+            <div class="section-actions">
+              <button class="btn">
+                ⟳ Refresh
+              </button>
+              <button class="btn btn-primary">
+                + New sales order
+              </button>
+            </div>
+          </div>
+
+          <div class="layout-grid">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Purchase pipeline
+                  <span class="pill">Inbound & confirmations</span>
+                </div>
+                <span class="kbd-badge">Einkauf</span>
+              </div>
+              <div class="card-body">
+                <div class="metric-row">
+                  <div class="metric">
+                    <div class="metric-label">Open purchase orders</div>
+                    <div class="metric-value">18</div>
+                    <div class="tag-row">
+                      <span class="tag status-warning"><span class="badge-dot yellow"></span> 4 near due</span>
+                      <span class="tag status-danger"><span class="badge-dot red"></span> 2 critical</span>
+                    </div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-label">Waiting for confirmation</div>
+                    <div class="metric-value">7</div>
+                    <div class="tag-row">
+                      <span class="tag">Avg. lead time 5.2 weeks</span>
+                    </div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-label">Inbound today</div>
+                    <div class="metric-value">3 pallets</div>
+                    <div class="tag-row">
+                      <span class="tag status-success"><span class="badge-dot green"></span> all on time</span>
+                    </div>
+                  </div>
+                </div>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>PO</th>
+                      <th>Vendor</th>
+                      <th>ETA</th>
+                      <th>Status</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>PO-24091</td>
+                      <td>Glaswerk Nord</td>
+                      <td>in 2 days</td>
+                      <td><span class="badge-dot yellow"></span>At risk</td>
+                      <td>12,430 €</td>
+                    </tr>
+                    <tr>
+                      <td>PO-24088</td>
+                      <td>AluTech GmbH</td>
+                      <td>Today</td>
+                      <td><span class="badge-dot blue"></span>Inbound</td>
+                      <td>8,210 €</td>
+                    </tr>
+                    <tr>
+                      <td>PO-24077</td>
+                      <td>Plastix AG</td>
+                      <td>+3 days</td>
+                      <td><span class="badge-dot red"></span>Overdue</td>
+                      <td>4,980 €</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Sales flow
+                  <span class="pill">Quotes → AB → LS → Invoice</span>
+                </div>
+                <span class="kbd-badge">Verkauf</span>
+              </div>
+              <div class="card-body">
+                <div class="kanban-columns">
+                  <div class="kanban-column">
+                    <div class="kanban-header">
+                      <div class="kanban-title">
+                        Quotes
+                        <span class="kanban-counter">5</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card">
+                      <div class="kanban-card-title">AN-3341 · Glass front</div>
+                      <div class="kanban-card-meta">
+                        <span>HT Plastics</span>
+                        <span class="pill-mini">Valid 3d</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card">
+                      <div class="kanban-card-title">AN-3339 · Profile mix</div>
+                      <div class="kanban-card-meta">
+                        <span>Global Frames</span>
+                        <span class="pill-mini">+ revision</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="kanban-column">
+                    <div class="kanban-header">
+                      <div class="kanban-title">
+                        Orders (AB)
+                        <span class="kanban-counter">8</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card">
+                      <div class="kanban-card-title">AB-9812 · Project “Skyline”</div>
+                      <div class="kanban-card-meta">
+                        <span><span class="badge-dot blue"></span> Kommission</span>
+                        <span class="pill-mini">Release today</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card">
+                      <div class="kanban-card-title">AB-9799 · B2B Standard</div>
+                      <div class="kanban-card-meta">
+                        <span><span class="badge-dot green"></span> Ready for LS</span>
+                        <span class="pill-mini">Prepaid</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="kanban-column">
+                    <div class="kanban-header">
+                      <div class="kanban-title">
+                        Delivery notes
+                        <span class="kanban-counter">3</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card">
+                      <div class="kanban-card-title">LS-4412 · Pickup</div>
+                      <div class="kanban-card-meta">
+                        <span>Today 15:00</span>
+                        <span class="pill-mini">Cash</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card">
+                      <div class="kanban-card-title">LS-4408 · Spedition</div>
+                      <div class="kanban-card-meta">
+                        <span>Tomorrow</span>
+                        <span class="pill-mini">Weight 1.2 t</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="kanban-column">
+                    <div class="kanban-header">
+                      <div class="kanban-title">
+                        Invoices
+                        <span class="kanban-counter">6</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card">
+                      <div class="kanban-card-title">RE-22033 · 14d net</div>
+                      <div class="kanban-card-meta">
+                        <span>CraftBoxx</span>
+                        <span class="pill-mini">Open</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card">
+                      <div class="kanban-card-title">RE-22029 · Overdue</div>
+                      <div class="kanban-card-meta">
+                        <span><span class="badge-dot red"></span> +10d</span>
+                        <span class="pill-mini">Reminder 1</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PURCHASING VIEW -->
+        <div id="view-purchasing" class="hidden">
+          <div class="section-header">
+            <div class="section-title-block">
+              <div class="section-title">
+                Purchasing & inbound
+                <span class="pill">PO flow · Lead times · Confirmations</span>
+              </div>
+              <div class="section-subtitle">
+                From purchase suggestions to confirmed orders and goods receipt.
+              </div>
+            </div>
+            <div class="section-actions">
+              <button class="btn">+ New purchase suggestion</button>
+              <button class="btn btn-primary">+ New purchase order</button>
+            </div>
+          </div>
+
+          <div class="layout-grid">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Purchase suggestions
+                  <span class="pill">Min. stock & consumption</span>
+                </div>
+                <span class="kbd-badge">Disposition</span>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Article</th>
+                      <th>Current</th>
+                      <th>Reserved</th>
+                      <th>Inbound</th>
+                      <th>Suggested vendor</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>GL-12-4 · Glass panel</td>
+                      <td>34 m²</td>
+                      <td>28 m²</td>
+                      <td>0</td>
+                      <td>Glaswerk Nord</td>
+                      <td><span class="tag">Create PO</span></td>
+                    </tr>
+                    <tr>
+                      <td>ALU-60-3 · Profile</td>
+                      <td>120 m</td>
+                      <td>98 m</td>
+                      <td>300 m</td>
+                      <td>AluTech GmbH</td>
+                      <td><span class="tag">Merge into PO-24088</span></td>
+                    </tr>
+                    <tr>
+                      <td>PL-Gran-22 · Granulate</td>
+                      <td>480 kg</td>
+                      <td>300 kg</td>
+                      <td>0</td>
+                      <td>Plastix AG</td>
+                      <td><span class="tag status-warning">Check lead time</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  PO detail · PO-24091
+                </div>
+                <span class="kbd-badge">Draft → Confirmed</span>
+              </div>
+              <div class="card-body">
+                <div class="metric-row">
+                  <div class="metric">
+                    <div class="metric-label">Vendor</div>
+                    <div class="metric-value">Glaswerk Nord</div>
+                    <div class="tag-row">
+                      <span class="tag">Standard</span>
+                      <span class="tag">Delivery Wed · weekly</span>
+                    </div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-label">ETA · lead time</div>
+                    <div class="metric-value">2025-11-24</div>
+                    <div class="tag-row">
+                      <span class="tag status-warning"><span class="badge-dot yellow"></span> +2d tolerance</span>
+                    </div>
+                  </div>
+                </div>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th>SKU</th>
+                      <th>Description</th>
+                      <th>Qty</th>
+                      <th>Confirmed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>10</td>
+                      <td>GL-12-4</td>
+                      <td>Glass panel 12mm clear</td>
+                      <td>30 m²</td>
+                      <td>30 m²</td>
+                    </tr>
+                    <tr>
+                      <td>20</td>
+                      <td>GL-12-4-TINT</td>
+                      <td>Glass panel 12mm tinted</td>
+                      <td>18 m²</td>
+                      <td>18 m²</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="tag-row">
+                  <span class="tag status-success"><span class="badge-dot green"></span> Confirmation received</span>
+                  <span class="tag">Compare with AB</span>
+                  <span class="tag">Upload confirmation PDF</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SALES VIEW -->
+        <div id="view-sales" class="hidden">
+          <div class="section-header">
+            <div class="section-title-block">
+              <div class="section-title">
+                Sales & documents
+                <span class="pill">Quotes · Orders · LS · Invoice</span>
+              </div>
+              <div class="section-subtitle">
+                All commercial documents linked to inventory and purchasing.
+              </div>
+            </div>
+            <div class="section-actions">
+              <button class="btn">+ New quote</button>
+              <button class="btn btn-primary">+ New order (AB)</button>
+            </div>
+          </div>
+
+          <div class="layout-grid">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Document chain
+                  <span class="pill">Traceability per project</span>
+                </div>
+                <span class="kbd-badge">Dokumente</span>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Quote</th>
+                      <th>Order (AB)</th>
+                      <th>Delivery notes</th>
+                      <th>Invoice</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Skyline Bau GmbH</td>
+                      <td>AN-3341</td>
+                      <td>AB-9812-1</td>
+                      <td>LS-4412</td>
+                      <td>RE-22033</td>
+                      <td><span class="badge-dot green"></span>Invoiced</td>
+                    </tr>
+                    <tr>
+                      <td>CraftBoxx</td>
+                      <td>AN-3330</td>
+                      <td>AB-9799</td>
+                      <td>LS-4408</td>
+                      <td>—</td>
+                      <td><span class="badge-dot blue"></span>Wait for proof</td>
+                    </tr>
+                    <tr>
+                      <td>HT Plastics</td>
+                      <td>AN-3345</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td><span class="badge-dot yellow"></span>Quote open</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  AB-9812 · “Skyline”
+                  <span class="pill">Versioning & commitments</span>
+                </div>
+                <span class="kbd-badge">AB · Versionen</span>
+              </div>
+              <div class="card-body">
+                <div class="metric-row">
+                  <div class="metric">
+                    <div class="metric-label">Customer</div>
+                    <div class="metric-value">Skyline Bau GmbH</div>
+                    <div class="tag-row">
+                      <span class="tag">Net 30</span>
+                      <span class="tag">Payment: bank transfer</span>
+                    </div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-label">AB versions</div>
+                    <div class="metric-value">AB-9812 · AB-9812-1</div>
+                    <div class="tag-row">
+                      <span class="tag status-success"><span class="badge-dot green"></span> 9812-1 active</span>
+                    </div>
+                  </div>
+                </div>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th>Article</th>
+                      <th>Qty</th>
+                      <th>Unit</th>
+                      <th>Price</th>
+                      <th>Stock link</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>10</td>
+                      <td>GL-12-4 · Glass panel</td>
+                      <td>22</td>
+                      <td>m²</td>
+                      <td>220 €</td>
+                      <td><span class="badge-dot blue"></span>Reserved</td>
+                    </tr>
+                    <tr>
+                      <td>20</td>
+                      <td>ALU-60-3 · Profile</td>
+                      <td>120</td>
+                      <td>m</td>
+                      <td>18 €</td>
+                      <td><span class="badge-dot yellow"></span>Needs PO</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="tag-row">
+                  <span class="tag">Create purchase order from position 20</span>
+                  <span class="tag">Send AB PDF to customer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INVENTORY VIEW -->
+        <div id="view-inventory" class="hidden">
+          <div class="section-header">
+            <div class="section-title-block">
+              <div class="section-title">
+                Inventory & pallet management
+                <span class="pill">Available · Reserved · Inbound</span>
+              </div>
+              <div class="section-subtitle">
+                Per-location stock, pallet traceability and movement overview.
+              </div>
+            </div>
+            <div class="section-actions">
+              <button class="btn">+ New pallet</button>
+              <button class="btn btn-primary">+ Goods receipt</button>
+            </div>
+          </div>
+
+          <div class="layout-grid">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Pallet overview
+                  <span class="pill">Warehouse 3 · Outside</span>
+                </div>
+                <span class="kbd-badge">Paletten</span>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Pallet</th>
+                      <th>Location</th>
+                      <th>Article</th>
+                      <th>Qty</th>
+                      <th>Manufacturer</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>PLT-00321</td>
+                      <td>WH3 · A-12</td>
+                      <td>ALU-60-3</td>
+                      <td>320 m</td>
+                      <td>AluTech GmbH</td>
+                      <td><span class="badge-dot green"></span>Active</td>
+                    </tr>
+                    <tr>
+                      <td>PLT-00287</td>
+                      <td>WH4 · B-04</td>
+                      <td>GL-12-4</td>
+                      <td>16 m²</td>
+                      <td>Glaswerk Nord</td>
+                      <td><span class="badge-dot yellow"></span>Low</td>
+                    </tr>
+                    <tr>
+                      <td>PLT-00290</td>
+                      <td>Outside · Z-02</td>
+                      <td>PL-Gran-22</td>
+                      <td>120 kg</td>
+                      <td>Plastix AG</td>
+                      <td><span class="badge-dot blue"></span>Reserved</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Stock status per article
+                  <span class="pill">Mindestbestand & disposition</span>
+                </div>
+                <span class="kbd-badge">Bestände</span>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Article</th>
+                      <th>Available</th>
+                      <th>Reserved</th>
+                      <th>In inbound POs</th>
+                      <th>Min. stock</th>
+                      <th>Signal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>GL-12-4</td>
+                      <td>34 m²</td>
+                      <td>28 m²</td>
+                      <td>48 m²</td>
+                      <td>60 m²</td>
+                      <td><span class="badge-dot yellow"></span>Order suggested</td>
+                    </tr>
+                    <tr>
+                      <td>ALU-60-3</td>
+                      <td>120 m</td>
+                      <td>98 m</td>
+                      <td>300 m</td>
+                      <td>150 m</td>
+                      <td><span class="badge-dot green"></span>OK</td>
+                    </tr>
+                    <tr>
+                      <td>PL-Gran-22</td>
+                      <td>480 kg</td>
+                      <td>300 kg</td>
+                      <td>0</td>
+                      <td>500 kg</td>
+                      <td><span class="badge-dot red"></span>Critical</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MASTER DATA VIEW -->
+        <div id="view-masterdata" class="hidden">
+          <div class="section-header">
+            <div class="section-title-block">
+              <div class="section-title">
+                Master data
+                <span class="pill">Customers · Vendors · Articles</span>
+              </div>
+              <div class="section-subtitle">
+                Central place to maintain key data for all processes.
+              </div>
+            </div>
+            <div class="section-actions">
+              <button class="btn">+ New customer</button>
+              <button class="btn">+ New vendor</button>
+              <button class="btn btn-primary">+ New article</button>
+            </div>
+          </div>
+
+          <div class="layout-grid">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Customers
+                  <span class="pill">Groups & credit limits</span>
+                </div>
+                <span class="kbd-badge">Kunden</span>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Group</th>
+                      <th>Payment terms</th>
+                      <th>Credit limit</th>
+                      <th>Flags</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Skyline Bau GmbH</td>
+                      <td>A</td>
+                      <td>30d net</td>
+                      <td>75,000 €</td>
+                      <td><span class="badge-dot green"></span>OK</td>
+                    </tr>
+                    <tr>
+                      <td>Global Frames</td>
+                      <td>B</td>
+                      <td>14d net</td>
+                      <td>35,000 €</td>
+                      <td><span class="badge-dot yellow"></span>Watch</td>
+                    </tr>
+                    <tr>
+                      <td>CraftBoxx</td>
+                      <td>Special</td>
+                      <td>Prepaid</td>
+                      <td>—</td>
+                      <td><span class="badge-dot blue"></span>Project</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Vendors & lead times
+                  <span class="pill">Per-product delivery logic</span>
+                </div>
+                <span class="kbd-badge">Lieferanten</span>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Vendor</th>
+                      <th>Articles</th>
+                      <th>Lead time</th>
+                      <th>Delivery rhythm</th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Glaswerk Nord</td>
+                      <td>GL-12-4, GL-12-4-TINT</td>
+                      <td>6 weeks</td>
+                      <td>Wed · weekly</td>
+                      <td>purchasing@glaswerk-nord.de</td>
+                    </tr>
+                    <tr>
+                      <td>AluTech GmbH</td>
+                      <td>ALU-60-3</td>
+                      <td>3 weeks</td>
+                      <td>Mon & Thu</td>
+                      <td>orders@alutech.de</td>
+                    </tr>
+                    <tr>
+                      <td>Plastix AG</td>
+                      <td>PL-Gran-22</td>
+                      <td>4 weeks</td>
+                      <td>On request</td>
+                      <td>sales@plastix.com</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ALERTS VIEW -->
+        <div id="view-alerts" class="hidden">
+          <div class="section-header">
+            <div class="section-title-block">
+              <div class="section-title">
+                Lead time & stock alerts
+                <span class="pill">Critical · Warning · Info</span>
+              </div>
+              <div class="section-subtitle">
+                Central cockpit for everything that requires attention today.
+              </div>
+            </div>
+            <div class="section-actions">
+              <button class="btn">Snooze 24h</button>
+              <button class="btn btn-primary">Open in task board</button>
+            </div>
+          </div>
+
+          <div class="card" style="height:100%;">
+            <div class="card-header">
+              <div class="card-title">
+                Active alerts
+              </div>
+              <span class="kbd-badge">System · Notifications</span>
+            </div>
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Object</th>
+                    <th>Details</th>
+                    <th>Owner</th>
+                    <th>Due</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge-dot red"></span>Delivery overdue</td>
+                    <td>PO-24077 · Plastix AG</td>
+                    <td>+3 days vs. confirmed date · Granulate PL-Gran-22</td>
+                    <td>Andreas</td>
+                    <td>Today</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge-dot yellow"></span>Stock low</td>
+                    <td>GL-12-4 · Glass panel</td>
+                    <td>Available 34 m² vs. min 60 m² · 2 open jobs</td>
+                    <td>Warehouse</td>
+                    <td>Today</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge-dot yellow"></span>Confirmation missing</td>
+                    <td>PO-24092 · Glaswerk Nord</td>
+                    <td>No confirmation after 48h · reminder mail suggested</td>
+                    <td>Purchasing</td>
+                    <td>+1 day</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge-dot blue"></span>Invoice overdue</td>
+                    <td>RE-22029 · Global Frames</td>
+                    <td>Payment +10d · reminder level 1</td>
+                    <td>Accounting</td>
+                    <td>Yesterday</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- REPORTS VIEW -->
+        <div id="view-reports" class="hidden">
+          <div class="section-header">
+            <div class="section-title-block">
+              <div class="section-title">
+                Reports & exports
+                <span class="pill">KPIs · DATEV · E-Rechnung</span>
+              </div>
+              <div class="section-subtitle">
+                Conceptual view on the planned reporting layer.
+              </div>
+            </div>
+            <div class="section-actions">
+              <button class="btn">Export CSV</button>
+              <button class="btn btn-primary">Prepare DATEV export</button>
+            </div>
+          </div>
+
+          <div class="layout-grid">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Sales KPIs
+                  <span class="pill">Last 30 days</span>
+                </div>
+                <span class="kbd-badge">Umsatz</span>
+              </div>
+              <div class="card-body">
+                <div class="metric-row">
+                  <div class="metric">
+                    <div class="metric-label">Revenue</div>
+                    <div class="metric-value">284,500 €</div>
+                    <div class="tag-row">
+                      <span class="tag status-success"><span class="badge-dot green"></span>+ 12% vs prev.</span>
+                    </div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-label">Margin</div>
+                    <div class="metric-value">34.8%</div>
+                    <div class="tag-row">
+                      <span class="tag">Glass projects high</span>
+                    </div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-label">Open invoices</div>
+                    <div class="metric-value">41,230 €</div>
+                    <div class="tag-row">
+                      <span class="tag status-warning"><span class="badge-dot yellow"></span>3 &gt; 30 days</span>
+                    </div>
+                  </div>
+                </div>
+                <p style="font-size:11px;color:var(--text-muted);margin-top:6px;">
+                  Charts, trend lines and drill-down views will be implemented in the reporting MVP
+                  based on the final data model.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  Export & integrations
+                  <span class="pill">DATEV · E-Invoice</span>
+                </div>
+                <span class="kbd-badge">Schnittstellen</span>
+              </div>
+              <div class="card-body">
+                <ul style="margin:0 0 4px 16px;padding:0;font-size:12px;color:var(--text-muted);">
+                  <li>DATEV-ready booking exports for invoices and payments</li>
+                  <li>Support of German e-invoicing (XRechnung / ZUGFeRD) via external service</li>
+                  <li>Configurable export profiles per tax adviser</li>
+                  <li>Manual and scheduled export runs</li>
+                </ul>
+                <div class="tag-row">
+                  <span class="tag">Concept: External accounting system</span>
+                  <span class="tag">Medusa as source of truth for commerce</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function setView(viewId, btn) {
+      const views = [
+        "dashboard",
+        "purchasing",
+        "sales",
+        "inventory",
+        "masterdata",
+        "alerts",
+        "reports"
+      ];
+      views.forEach(v => {
+        const el = document.getElementById("view-" + v);
+        if (el) {
+          if (v === viewId) {
+            el.classList.remove("hidden");
+          } else {
+            el.classList.add("hidden");
+          }
+        }
+      });
+
+      document
+        .querySelectorAll(".nav-btn")
+        .forEach((b) => b.classList.remove("active"));
+      if (btn) {
+        btn.classList.add("active");
+      } else {
+        const activeBtn = document.querySelector(
+          '.nav-btn[data-view="' + viewId + '"]'
+        );
+        if (activeBtn) activeBtn.classList.add("active");
+      }
+    }
+  </script>
+</body>
+</html>
